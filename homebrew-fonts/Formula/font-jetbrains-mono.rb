@@ -1,0 +1,41 @@
+class FontJetbrainsMono < Formula
+  version "2.200"
+  sha256 "5d26ca65999d128e864e31dafe2875e16d9cfed4193b27b38fc53932ded5f830"
+  url "https://github.com/JetBrains/JetBrainsMono/releases/download/v#{version}/JetBrainsMono-#{version}.zip"
+  desc "JetBrains Mono"
+  desc "Typeface made for developers"
+  homepage "https://www.jetbrains.com/lp/mono"
+  def install
+    parent = File.dirname(Dir.pwd) != (ENV['HOMEBREW_TEMP'] || '/tmp') ?  '../' : ''
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-Bold.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-BoldItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-ExtraBold.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-ExtraBoldItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-ExtraLight.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-ExtraLightItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-Italic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-Light.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-LightItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-Medium.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-MediumItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-Regular.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-Thin.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMono-ThinItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-Bold.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-BoldItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-ExtraBold.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-ExtraBoldItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-ExtraLight.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-ExtraLightItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-Italic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-Light.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-LightItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-Medium.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-MediumItalic.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-Regular.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-Thin.ttf"
+    (share/"fonts").install "#{parent}fonts/ttf/JetBrainsMonoNL-ThinItalic.ttf"
+  end
+  test do
+  end
+end

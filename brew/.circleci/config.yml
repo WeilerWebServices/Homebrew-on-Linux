@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: linuxbrew/linuxbrew
+    environment:
+      HOMEBREW_DEVELOPER: 1
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - run: |
+          cd /home/linuxbrew/.linuxbrew/Homebrew
+          git pull --ff-only
+          if [ -n "$CIRCLE_PR_NUMBER" ]; then
+              git fetch origin pull/$CIRCLE_PR_NUMBER/head
+          fi
+          git reset --hard $CIRCLE_SHA1
+          git config --global user.name LinuxbrewTestBot
+          git config --global user.email testbot@linuxbrew.sh
+      - run: |
+          umask 022
+          PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
+          mkdir /home/linuxbrew/test-bot
+          cd /home/linuxbrew/test-bot
+          brew test-bot
+      - run: ls /home/linuxbrew/test-bot
+      - store_artifacts:
+          path: /home/linuxbrew/test-bot
+      - store_test_results:
+          path: /home/linuxbrew/test-bot

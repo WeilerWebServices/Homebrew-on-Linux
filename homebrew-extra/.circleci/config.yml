@@ -1,0 +1,42 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: linuxbrew/brew
+    environment:
+      CIRCLE_PROJECT_USERNAME: linuxbrew
+      CIRCLE_REPOSITORY_URL: https://github.com/linuxbrew/homebrew-extra
+      HOMEBREW_DEVELOPER: 1
+      HOMEBREW_NO_AUTO_UPDATE: 1
+      HOMEBREW_VERBOSE: 1
+      HOMEBREW_VERBOSE_USING_DOTS: 1
+    steps:
+      - run: |
+          cd /home/linuxbrew/.linuxbrew/Homebrew
+          git fetch origin --tags
+          git reset --hard origin/master
+      - checkout
+      - run: git remote set-url origin $CIRCLE_REPOSITORY_URL
+      - run: if [ -e .git/shallow ]; then echo git fetch --unshallow; fi
+      - run: git fetch origin
+      - run: git config --global user.name LinuxbrewTestBot
+      - run: git config --global user.email testbot@linuxbrew.sh
+      - run: chmod 0644 Formula/*.rb
+      - run: mkdir -p /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/$CIRCLE_PROJECT_USERNAME
+      - run: cp -a . /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+      - run: |
+          mkdir /tmp/bottles
+          cd /tmp/bottles
+          umask 022
+          PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
+          brew install patchelf
+          brew tap linuxbrew/xorg
+          brew test-bot --bintray-org=linuxbrew --git-name=LinuxbrewTestBot --git-email=testbot@linuxbrew.sh
+      - store_artifacts:
+          path: /tmp/bottles
+          destination: bottles
+      - store_test_results:
+          path: /tmp/bottles
+notify:
+  webhooks:
+    - url: https://p4142ivuwk.execute-api.us-west-2.amazonaws.com/prod/ci-upload

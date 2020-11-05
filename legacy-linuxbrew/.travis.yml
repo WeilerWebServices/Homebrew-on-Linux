@@ -1,0 +1,31 @@
+language: ruby
+rvm:
+  - 2.0.0
+
+before_install:
+  # Fix error: Incorrect file permissions (664)
+  - chmod 644 Library/Formula/*.rb
+  - umask 022
+  - if [ -f ".git/shallow" ]; then
+      travis_retry git fetch --unshallow;
+    fi
+
+install:
+  - PATH=$PWD/bin:$PATH
+  - export HOMEBREW_DEVELOPER="1"
+
+script:
+  - brew test-bot
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+
+addons:
+  artifacts:
+    s3_region: "us-west-2"
+    debug: true
+    paths:
+      - $(echo *.bottle.rb *.tar.gz)
+      - $(git ls-files -m Library/Formula | tr "\n" ":")

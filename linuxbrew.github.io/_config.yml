@@ -1,0 +1,5 @@
+title: Homebrew on Linux
+description: The Homebrew package manager for Linux
+
+plugins:
+  - jekyll-redirect-from
